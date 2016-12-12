@@ -128,7 +128,6 @@ if FLAG_VERBOSE:
     sys.stderr.write("\n")
 
 # Step 6. Write out each node on the tree.
-import inspect
 node_count = 1
 for node in tree:
     output_file.write(render.render_path('templates/individual.txt', {
