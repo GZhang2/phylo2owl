@@ -71,10 +71,16 @@ def validateWithReasoner(treePath, phylorefPath):
         expectedIndividuals = sorted(list(graph.subjects(RDF.type, expectedClass)))
         observedIndividuals = sorted(list(graph.subjects(RDF.type, observedClass)))
 
+        # For debugging, write out the two lists.
+        print "Comparing individuals in two classes: "
+        print " - " + expectedClass + ":\n   - " + "\n   - ".join(expectedIndividuals)
+        print " - " + observedClass + ":\n   - " + "\n   - ".join(observedIndividuals)
+
         # Assert that these lists contain atleast one individual each.
         assert len(expectedIndividuals) > 0
         assert len(observedIndividuals) > 0
 
         # Test that these two lists are identical.
+        assert len(expectedIndividuals) == len(observedIndividuals)
         assert expectedIndividuals == observedIndividuals
 
