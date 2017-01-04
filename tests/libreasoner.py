@@ -14,15 +14,21 @@ def exec_reasoner(cmdline=[], stdin=""):
     """
 
     environment = os.environ
+    jar_path = "tests/reasoner/target/reasoner-0.1-SNAPSHOT.jar"
+    assert os.path.isfile(jar_path)
 
-    starts_with = ["java", "-jar", "target/reasoner-0.1-SNAPSHOT.jar"]
+    starts_with = ["java", "-jar", jar_path]
 
     # Based on http://stackoverflow.com/a/1996540/27310
     print starts_with
     print cmdline
-    p = subprocess.Popen(starts_with + cmdline, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=environment, cwd="tests/reasoner")
+    p = subprocess.Popen(starts_with + cmdline, 
+        stdin=subprocess.PIPE, 
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.PIPE, 
+        env=environment
+    )
     stdout, stderr = p.communicate(stdin)
-    # print stdout
     print stderr
     return (p.returncode, stdout, stderr)
 
@@ -51,6 +57,9 @@ def validateWithReasoner(treePath, phylorefPath):
     allClasses = set(graph.objects(None, RDF.type))
     expectedClasses = filter(lambda x: x.endswith(u'_expected'), allClasses)
 
+    # There should be atleast one expected class.
+    assert len(expectedClasses) > 0
+
     for cl in expectedClasses:
         # For every 'X_expected' class, identify the 'X' class with
         # observed values.
@@ -62,7 +71,10 @@ def validateWithReasoner(treePath, phylorefPath):
         expectedIndividuals = sorted(list(graph.subjects(RDF.type, expectedClass)))
         observedIndividuals = sorted(list(graph.subjects(RDF.type, observedClass)))
 
+        # Assert that these lists contain atleast one individual each.
+        assert len(expectedIndividuals) > 0
+        assert len(observedIndividuals) > 0
+
         # Test that these two lists are identical.
-        print "Comparing classes '%s' and '%s'." % (expectedClass, observedClass)
         assert expectedIndividuals == observedIndividuals
 
