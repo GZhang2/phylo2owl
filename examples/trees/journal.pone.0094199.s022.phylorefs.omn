@@ -141,6 +141,25 @@ Ontology: <http://phyloinformatics.net/phylo/journal.pone.0094199.s022>
             crowl_et_al:Node_123
         }
 
+    Class: crowl_et_al:clade_G
+        SubClassOf: phyloref:Phyloreference
+        EquivalentTo: obo:CDAO_0000140 that obo:CDAO_0000144 some (
+            obo:CDAO_0000149 some (
+                obo:CDAO_0000174 value crowl_et_al:Campanula_erinus
+                and phyloref:excludes_lineage_to value crowl_et_al:Campanula_drabifolia
+            )
+        )
+
+    Class: crowl_et_al:clade_G_expected
+        EquivalentTo: {
+            crowl_et_al:Campanula_creutzburgii,
+            crowl_et_al:Campanula_erinus,
+            crowl_et_al:Campanula_drabifolia,
+
+            # Internal node
+            crowl_et_al:Node_81
+        }
+
     Class: crowl_et_al:clade_H
         SubClassOf: phyloref:Phyloreference
         EquivalentTo: obo:CDAO_0000140 that obo:CDAO_0000144 some (
@@ -164,3 +183,4 @@ Ontology: <http://phyloinformatics.net/phylo/journal.pone.0094199.s022>
             crowl_et_al:Node_109,
             crowl_et_al:Node_110
         }
+
